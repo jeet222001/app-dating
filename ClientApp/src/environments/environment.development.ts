@@ -1,0 +1,6 @@
+export const environment = {
+  production: true,
+  apiUrl: 'https://localhost:44377/api/',
+  hubUrl: 'hubs/',
+  apiKey:'1ee3d253f2254c91a93b30517cc6c538'
+};
