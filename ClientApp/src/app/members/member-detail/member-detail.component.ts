@@ -15,7 +15,7 @@ export class MemberDetailComponent implements OnInit {
   galleryImages: NgxGalleryImage[] = [];
   constructor(private memberService: MembersService, private route: ActivatedRoute) {
 
-  }
+  } 
   ngOnInit(): void {
     this.loadmembers();
     this.galleryOptions = [

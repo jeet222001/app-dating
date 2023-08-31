@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://dating2023apiservice.azure-api.net/dating/api/',
-  apiKey:'1ee3d253f2254c91a93b30517cc6c538'
+  //apiUrl: 'https://localhost:44377/api/',
+  apiUrl: 'https://localhost:44377/api/',
+  apiKey: '1ee3d253f2254c91a93b30517cc6c538'
 };
 
 /*

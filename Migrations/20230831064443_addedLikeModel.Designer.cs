@@ -4,6 +4,7 @@ using Datingnew.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datingnew.Migrations
 {
     [DbContext(typeof(DatingAppContext))]
-    partial class DatingAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230831064443_addedLikeModel")]
+    partial class addedLikeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,19 +113,19 @@ namespace Datingnew.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Datingnew.Models.UserLike", b =>
+            modelBuilder.Entity("UserUser", b =>
                 {
-                    b.Property<int>("SourceId")
+                    b.Property<int>("LikedByUsersId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetUserId")
+                    b.Property<int>("LikedUsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("SourceId", "TargetUserId");
+                    b.HasKey("LikedByUsersId", "LikedUsersId");
 
-                    b.HasIndex("TargetUserId");
+                    b.HasIndex("LikedUsersId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("UserUser");
                 });
 
             modelBuilder.Entity("Datingnew.Models.Photo", b =>
@@ -136,31 +139,23 @@ namespace Datingnew.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Datingnew.Models.UserLike", b =>
+            modelBuilder.Entity("UserUser", b =>
                 {
-                    b.HasOne("Datingnew.Models.User", "SourceUser")
-                        .WithMany("LikedUsers")
-                        .HasForeignKey("SourceId")
+                    b.HasOne("Datingnew.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikedByUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Datingnew.Models.User", "TargetUser")
-                        .WithMany("LikedByUsers")
-                        .HasForeignKey("TargetUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Datingnew.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikedUsersId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("SourceUser");
-
-                    b.Navigation("TargetUser");
                 });
 
             modelBuilder.Entity("Datingnew.Models.User", b =>
                 {
-                    b.Navigation("LikedByUsers");
-
-                    b.Navigation("LikedUsers");
-
                     b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618

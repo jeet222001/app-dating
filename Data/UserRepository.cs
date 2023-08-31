@@ -34,11 +34,27 @@ namespace Datingnew.Data
 
 		public async Task<PagedList<MemberDTO>> GetMembersAsync(UserParams userParams)
 		{
-			var query = _context.Users
-				.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
-				.AsNoTracking();
+			var query = _context.Users.AsQueryable();
 
-			return await PagedList<MemberDTO>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+			query = query.Where(x => x.UserName != userParams.CurrentUserName);
+			query = query.Where(u => u.Gender == userParams.Gender);
+
+			var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+			var maxDob = DateTime.Today.AddYears(userParams.MinAge);
+
+			query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+			query = userParams.OrderBy switch
+			{
+				"created" => query.OrderByDescending(u => u.Created),
+				_ => query.OrderByDescending(u => u.LastActive)
+			};
+
+			return await PagedList<MemberDTO>.CreateAsync(
+				query.AsNoTracking().ProjectTo<MemberDTO>(_mapper.ConfigurationProvider),
+				userParams.PageNumber,
+				userParams.PageSize
+				);
 		}
 
 		public async Task<User> GetUserByIdAsync(int id)

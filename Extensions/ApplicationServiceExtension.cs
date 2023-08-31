@@ -18,6 +18,7 @@ namespace Datingnew.Extensions
 	=> options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 			services.AddScoped<ITokenService, TokenService>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			// Auto Mapper Configurations
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
 			services.AddScoped<IPhotoService, PhotoService>();
@@ -25,6 +26,8 @@ namespace Datingnew.Extensions
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
+			services.AddScoped<LogUserActivity>();
+			services.AddScoped<ILikesRepository, LikedRepository>();
 			return services;
 		}
 	}
