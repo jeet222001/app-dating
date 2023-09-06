@@ -20,7 +20,11 @@ public static class ApplicationServiceExtensions
         services.AddSignalR();
         services.AddSingleton<PresenceTracker>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+		services.AddSpaStaticFiles(configuration =>
+		{
+			configuration.RootPath = "client/dist";
+		});
 
-        return services;
+		return services;
     }
 }
