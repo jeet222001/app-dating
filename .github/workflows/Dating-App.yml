@@ -30,7 +30,7 @@ jobs:
         npm install -g @angular/cli@${{ env.ANGULAR_VERSION }}
         cd ClientApp
         npm install --legacy-peer-deps
-        ng build --prod
+        ng build 
       working-directory: ${{ env.WORKING_DIRECTORY }}
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
