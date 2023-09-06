@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App Dating-App
+name: Build and deploy .NET Core and Angular 16 application to Web App Dating-App
 on:
   push:
     branches:
@@ -8,6 +8,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: .\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
+  ANGULAR_VERSION: 16.0.0
   WORKING_DIRECTORY: .
 jobs:
   build:
@@ -24,6 +25,13 @@ jobs:
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
       run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Build Angular 16
+      run: |
+        npm install -g @angular/cli@${{ env.ANGULAR_VERSION }}
+        cd path/to/your/angular-app
+        npm install --legacy-peer-deps
+        ng build --prod
+      working-directory: ${{ env.WORKING_DIRECTORY }}
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Publish Artifacts
