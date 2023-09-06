@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:server=dating-app-dbserver;database=dating-app-db;userid=jeet.raythatha;password=Rjh@2001",
+      "dynamicId": null
+    }
+  }
+}
