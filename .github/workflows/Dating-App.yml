@@ -28,7 +28,7 @@ jobs:
     - name: Build Angular 16
       run: |
         npm install -g @angular/cli@${{ env.ANGULAR_VERSION }}
-        cd path/to/your/angular-app
+        cd ClientApp
         npm install --legacy-peer-deps
         ng build --prod
       working-directory: ${{ env.WORKING_DIRECTORY }}
